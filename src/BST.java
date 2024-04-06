@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+// Diego Villegas
 /**
  * An Integer Binary Search Tree
  * @author: Your Name Here
@@ -47,32 +47,96 @@ public class BST {
      * @return true if val is in the tree, false otherwise
      */
     public boolean search(int val) {
-        // TODO: Complete the search function
+        if(isFound(root, val)){
+            return true;
+        }
         return false;
+    }
+    // Recursive and helper method for search
+    public boolean isFound(BSTNode n, int val){
+        // Base case: When we reach the end, return false
+        if(n == null){
+            return false;
+        }
+        // Second Base case: If we find the target, return true
+        if(val == n.getVal()){
+            return true;
+        }
+        // Recursive step check right child if val is greater than node
+        if(val > n.getVal()){
+            return isFound(n.getRight(), val);
+        }
+        // Recursive step check left child
+        return isFound(n.getLeft(), val);
     }
 
     /**
      * @return ArrayList of BSTNodes in inorder
      */
+    // Traverse through tree left root right
     public ArrayList<BSTNode> getInorder() {
-        // TODO: Complete inorder traversal
-        return null;
+        ArrayList<BSTNode> nodes = new ArrayList<BSTNode>();
+        inorder(nodes, root);
+        return nodes;
+    }
+    // Recursive and helper method for getInorder
+    public void inorder(ArrayList<BSTNode> nodes, BSTNode n){
+        // Base Case: Once we reach the end return
+        if(n == null){
+            return;
+        }
+        // Go to Left Child
+        inorder(nodes, n.getLeft());
+        // Add node to arraylist
+        nodes.add(n);
+        // Go to Right child
+        inorder(nodes, n.getRight());
     }
 
     /**
      * @return ArrayList of BSTNodes in preorder
      */
+    // Traverse through tree Root Left Right
     public ArrayList<BSTNode> getPreorder() {
-        // TODO: Complete preorder traversal
-        return null;
+        ArrayList<BSTNode> nodes = new ArrayList<BSTNode>();
+        preorder(nodes, root);
+        return nodes;
+    }
+    // Recursive and helper method for getPreorder
+    public void preorder(ArrayList<BSTNode> nodes, BSTNode n){
+        // Base Case: Once we reach the end return
+        if(n == null){
+            return;
+        }
+        // Add node to arraylist
+        nodes.add(n);
+        // Go to Left Child
+        preorder(nodes, n.getLeft());
+        // Go to Right child
+        preorder(nodes, n.getRight());
     }
 
     /**
      * @return ArrayList of BSTNodes in postorder
      */
+    // Traverse through tree Left Right Root
     public ArrayList<BSTNode> getPostorder() {
-        // TODO: Complete postorder traversal
-        return null;
+        ArrayList<BSTNode> nodes = new ArrayList<BSTNode>();
+        postorder(nodes, root);
+        return nodes;
+    }
+    // Recursive and helper method for getPostorder
+    public void postorder(ArrayList<BSTNode> nodes, BSTNode n) {
+        // Base Case: Once we reach the end return
+        if(n == null){
+            return;
+        }
+        // Go to Left Child
+        postorder(nodes, n.getLeft());
+        // Go to Right child
+        postorder(nodes, n.getRight());
+        // Add node to arraylist
+        nodes.add(n);
     }
 
     /**
@@ -81,8 +145,33 @@ public class BST {
      * root instance variable to be the root of the new modified tree.
      * @param val The value ot insert
      */
+    // Insert a node into a true if it isn't on the tree
     public void insert(int val) {
         // TODO: Complete insert
+        if(!search(val)){
+            insertNum(root, val);
+        }
+    }
+    // Recursive and helper method for insert
+    public void insertNum(BSTNode node, int val){
+        // Base case: Be able to place a left child
+        if(node.getLeft() == null && node.getVal() > val){
+            node.setLeft(new BSTNode(val));
+            return;
+        }
+        // Base case: Be able to place right child
+        if(node.getLeft() == null && node.getVal() < val){
+            node.setRight(new BSTNode(val));
+            return;
+        }
+        // Recursive step: move left side because val is less than node value
+        if(val < node.getVal()){
+            insertNum(node.getLeft(), val);
+        }
+        else{
+            // Recursive step: move right side because val is greater than node value
+            insertNum(node.getRight(), val);
+        }
     }
 
     /**
